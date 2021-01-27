@@ -1,65 +1,45 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Link from "next/link";
+
+import { useUserSocial, useUser, useAllRepos } from "@hyperlog/hooks";
+
+import Container from "../components/Container";
+import ProjectCard from "../components/ProjectCard";
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  const { user, isLoading: isUserLoading } = useUser();
+  const { repos, isLoading: isRepoLoading } = useAllRepos();
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+  const repoImage = (repo) => {
+    let repo_owner = repo.substr(0, repo.indexOf("/"));
+    return `https://github.com/${repo_owner}.png`;
+  };
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+  if (!isUserLoading && !isRepoLoading) {
+    console.log(user);
+    return (
+      <Container title={user.first_name + " " + user.last_name} description={user.tagline}>
+        <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16">
+          <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
+            Hey, I’m {user.first_name} {user.last_name}
+          </h1>
+          <h2 className="prose text-gray-600 dark:text-gray-400 mb-16">
+            {user.tagline}
+          </h2>
+          <h3 className="font-bold text-2xl md:text-4xl tracking-tight mb-4 mt-8 text-black dark:text-white">
+            Projects
+          </h3>
+          {repos.map((repo) => (
+            <ProjectCard
+              title={repo.repo_full_name}
+              description={repo.description}
+              href={repo.external_url}
+              icon={repoImage(repo.repo_full_name)}
+            />
+          ))}
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      </Container>
+    );
+  } else {
+    return <></>;
+  }
 }
