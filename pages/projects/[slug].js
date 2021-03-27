@@ -1,7 +1,7 @@
 import Container from "../../components/Container";
 import dynamic from "next/dynamic";
 
-const ReactJson = dynamic(() => import("react-json-view"));
+const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
 export default function Project({ project, user }) {
   return (
