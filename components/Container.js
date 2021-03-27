@@ -1,9 +1,9 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import NextLink from 'next/link';
-import Footer from './Footer';
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import NextLink from "next/link";
+import Footer from "./Footer";
 
 export default function Container(props) {
   const [mounted, setMounted] = useState(false);
@@ -12,14 +12,14 @@ export default function Container(props) {
   // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
 
-  const { children, ...customMeta } = props;
+  const { user, children, ...customMeta } = props;
   const router = useRouter();
   const meta = {
-    title: 'Lee Robinson – Developer, writer, creator.',
-    description: `Front-end developer, JavaScript enthusiast, and course creator.`,
-    image: 'https://leerob.io/static/images/banner.png',
-    type: 'website',
-    ...customMeta
+    title: `${user.first_name} ${user.last_name} - ${user.tagline}`,
+    description: user.tagline,
+    image: user.meta_image ?? "https://hyperlog.io/hero_image.png",
+    type: "website",
+    ...customMeta,
   };
 
   return (
@@ -28,14 +28,17 @@ export default function Container(props) {
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://leerob.io${router.asPath}`} />
+        <meta
+          property="og:url"
+          content={`https://${user.username}.hyperlog.dev${router.asPath}`}
+        />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Lee Robinson" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@leeerob" />
+        <meta name="twitter:site" content={`@${user.username}`} />
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
@@ -51,7 +54,7 @@ export default function Container(props) {
           aria-label="Toggle Dark Mode"
           type="button"
           className="bg-gray-200 dark:bg-gray-800 rounded p-3 h-10 w-10"
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
           {mounted && (
             <svg
@@ -61,7 +64,7 @@ export default function Container(props) {
               stroke="currentColor"
               className="h-4 w-4 text-gray-800 dark:text-gray-200"
             >
-              {theme === 'dark' ? (
+              {theme === "dark" ? (
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -80,9 +83,6 @@ export default function Container(props) {
           )}
         </button>
         <div>
-          <NextLink href="/about">
-            <a className="p-1 sm:p-4 text-gray-900 dark:text-gray-100">About</a>
-          </NextLink>
           <NextLink href="/">
             <a className="p-1 sm:p-4 text-gray-900 dark:text-gray-100">Home</a>
           </NextLink>
@@ -93,7 +93,7 @@ export default function Container(props) {
         className="flex flex-col justify-center bg-white dark:bg-black px-8"
       >
         {children}
-        <Footer />
+        <Footer socials={user.social_links} />
       </main>
     </div>
   );
