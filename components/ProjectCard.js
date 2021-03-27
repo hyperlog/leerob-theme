@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function ProjectCard({ project }) {
   return (
     <Link href={`/projects/${project.slug}`}>
-      <div className="relative pt-64 pb-10 rounded-2xl shadow hover:shadow-xl transition duration-150 ease-linear cursor-pointer w-full overflow-hidden">
+      <div className="relative pt-64 pb-10 rounded-2xl shadow hover:shadow-xl transition duration-150 ease-linear cursor-pointer w-full overflow-hidden mb-10">
         <img
           className="absolute inset-0 h-full w-full object-cover"
           src={project.image_url}
