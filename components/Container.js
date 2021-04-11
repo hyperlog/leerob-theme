@@ -16,8 +16,9 @@ export default function Container(props) {
   const router = useRouter();
   const meta = {
     title: `${user.first_name} ${user.last_name} - ${user.tagline}`,
+    site_name: `${user.first_name} ${user.last_name}`,
     description: user.tagline,
-    image: user.meta_image ?? "https://hyperlog.io/hero_image.png",
+    image: user.opengraph_image ?? "https://hyperlog.io/hero_image.png",
     type: "website",
     ...customMeta,
   };
@@ -33,7 +34,7 @@ export default function Container(props) {
           content={`https://${user.username}.hyperlog.dev${router.asPath}`}
         />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="Lee Robinson" />
+        <meta property="og:site_name" content="{meta.site_name}" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
