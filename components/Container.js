@@ -98,6 +98,7 @@ export default function Container(props) {
         {children}
         <Footer socials={user.social_links} />
       </main>
+      <script src="https://hyperlog.io/hyperlog.js"></script>
     </div>
   );
 }
