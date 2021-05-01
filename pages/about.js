@@ -1,4 +1,5 @@
 import Container from "../components/Container";
+import ReactMarkdown from "react-markdown";
 
 const About = ({ user }) => {
   return (
@@ -7,9 +8,9 @@ const About = ({ user }) => {
         <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
           Hey, I’m {user.first_name} {user.last_name}
         </h1>
-        <p className="prose text-gray-600 dark:text-gray-400 mb-16">
+        <ReactMarkdown className="prose dark:prose-dark max-w-none w-full mt-5 mb-16">
           {user.about}
-        </p>
+        </ReactMarkdown>
       </div>
     </Container>
   );

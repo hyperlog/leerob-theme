@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "../components/Container";
 import ProjectCard from "../components/ProjectCard";
+import ReactMarkdown from "react-markdown";
 
 export default function Home({ user, projects, blogs }) {
   return (
@@ -12,6 +13,14 @@ export default function Home({ user, projects, blogs }) {
         <h2 className="prose text-gray-600 dark:text-gray-400">
           {user.tagline}
         </h2>
+
+        <h3 className="font-bold text-2xl tracking-tight mb-4 mt-8 text-black dark:text-white">
+          About Me
+        </h3>
+        <ReactMarkdown className="prose dark:prose-dark max-w-none w-full mt-5 mb-4">
+          {user.about}
+        </ReactMarkdown>
+
         <h3 className="font-bold text-2xl tracking-tight mb-4 mt-8 text-black dark:text-white">
           Projects
         </h3>
