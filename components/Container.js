@@ -34,7 +34,7 @@ export default function Container(props) {
           content={`https://${user.username}.hyperlog.dev${router.asPath}`}
         />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="{meta.site_name}" />
+        <meta property="og:site_name" content={meta.site_name} />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
